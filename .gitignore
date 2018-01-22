@@ -1,0 +1,8 @@
+hipmunkhotel/
+virtualenv/
+venv/
+
+*__pycache__*
+
+*.pyc
+*~
