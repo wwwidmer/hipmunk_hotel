@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, jsonify, abort
+from flask import Blueprint, render_template, jsonify, redirect, url_for
 
-hotel_blueprint =  Blueprint('HotelBlueprint', __name__, url_prefix='/hotels')
+hotel_blueprint = Blueprint('HotelBlueprint', __name__, url_prefix='/hotels')
 
 from .quick_search import QuickSearch
 
@@ -23,8 +23,6 @@ def search():
     )
 
 
-
-
 @hotel_blueprint.route('/', defaults={'page': 'index'})
 def index(page):
-    return 'List of things'
+    return redirect(url_for('HotelBlueprint.search'))

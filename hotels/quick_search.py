@@ -7,7 +7,7 @@ API_URL = 'http://localhost:9000/scrapers/{}'
 
 class QuickSearch(object):
     '''
-        For the test parsing all URLs took over ten seconds!
+        For the test parsing all URLs sequentially took over ten seconds!
         So we need to grab all of the URLs in parallel
         (Otherwise we'll be "kinda" slow)
     '''
@@ -26,8 +26,12 @@ class QuickSearch(object):
                 because its a bit simpler to read and less code
             They're both pretty much the same performance wise
         '''
-        self.searched[url] = requests.get(url).json()
-
+        try:
+            self.searched[url] = requests.get(url).json()
+        except Exception as e:
+            self.searched[url] = {
+                'error': str(e)
+            }
     def get_all(self):
         self.searched = {}
         urls = [API_URL.format(provider) for provider in self.providers]
